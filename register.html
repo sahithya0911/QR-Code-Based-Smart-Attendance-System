@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Student</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container" style="max-width: 500px; margin-top: 60px;">
+        <h1>👨‍🎓 Register Student</h1>
+        <p>Fill the form to register and generate QR code!</p>
+
+        <form method="POST">
+            <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" name="name" placeholder="Enter full name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Roll Number</label>
+                <input type="text" name="roll_no" placeholder="Enter roll number" required>
+            </div>
+
+            <div class="form-group">
+                <label>Class</label>
+                <input type="text" name="class_name" placeholder="Enter class name" required>
+            </div>
+
+            <button type="submit" class="btn btn-green" style="width:100%; text-align:center;">
+                ✅ Register & Generate QR Code
+            </button>
+        </form>
+
+        <a href="/" class="back-link">← Back to Dashboard</a>
+    </div>
+</body>
+</html>

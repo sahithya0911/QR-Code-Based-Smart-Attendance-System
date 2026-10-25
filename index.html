@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Smart Attendance System</h1>
+        <p>Welcome! Manage student attendance easily.</p>
+
+        <!-- Stats Cards -->
+        <div class="stats">
+            <div class="stat-card stat-green">
+                <h2>{{ records|length }}</h2>
+                <p>Present Today</p>
+            </div>
+            <div class="stat-card stat-blue">
+                <h2>📷</h2>
+                <p>QR Scanner Ready</p>
+            </div>
+            <div class="stat-card stat-purple">
+                <h2>📋</h2>
+                <p>Sheets Sync Active</p>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <a href="/register" class="btn btn-green">+ Register Student</a>
+        <a href="/scanner" class="btn btn-purple">📷 Open Scanner</a>
+        <a href="/sync" class="btn btn-blue">🔄 Sync to Sheets</a>
+
+        <br><br>
+
+        <!-- Alerts -->
+        {% if request.args.get('sync') == 'success' %}
+        <div class="alert-success">✅ Synced to Google Sheets successfully!</div>
+        {% elif request.args.get('sync') == 'failed' %}
+        <div class="alert-danger">❌ Sync failed! Check credentials.</div>
+        {% endif %}
+
+        <!-- Date Filter -->
+        <form method="GET" action="/" class="filter-bar">
+            <label style="margin:0;">📅 Filter by Date:</label>
+            <input type="date" name="date" value="{{ today }}">
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- Attendance Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>👤 Name</th>
+                    <th>🔢 Roll No</th>
+                    <th>🏫 Class</th>
+                    <th>⏰ Time</th>
+                    <th>✅ Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.roll_no }}</td>
+                    <td>{{ record.class_name }}</td>
+                    <td>{{ record.time }}</td>
+                    <td><span style="color:green; font-weight:bold;">✅ {{ record.status }}</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" style="text-align:center; padding:30px; color:#888;">
+                        No attendance marked for this date!
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
